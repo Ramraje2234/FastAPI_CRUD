@@ -86,7 +86,7 @@ async def filter_clock_in(
         print("query", query)
 
         # Fetch filtered records from the collection
-        records = collections.find(query)
+        records = await collections.find(query).to_list()
         print(records)
         filtered_records = [clock_in_serializer(record) for record in records]
 
