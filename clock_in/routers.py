@@ -73,6 +73,7 @@ async def filter_clock_in(
         db=Depends(get_database)):
     try:
         collections = db["clock_in_records"]
+        print(collections)
 
         # Build the query based on provided filters
         query = {}
@@ -82,9 +83,11 @@ async def filter_clock_in(
             query["location"] = location
         if clock_in_time:
             query["clock_in_time"] = {"$gt": clock_in_time}
+        print("query", query)
 
         # Fetch filtered records from the collection
         records = await collections.find(query)
+        print(records)
         filtered_records = [clock_in_serializer(record) for record in records]
 
         resp = {
